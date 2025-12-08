@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English 4 my kid - Modais</title>
+    <style>
+        /* Estilos visuais para atrair a criança (Cores vibrantes e fontes grandes) */
+        body {
+            font-family: 'Comic Sans MS', 'Arial', sans-serif;
+            background-color: #f0f8ff;
+            text-align: center;
+            margin: 0;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 { 
+            color: #ff6600; 
+            font-size: 28px;
+            margin-bottom: 20px;
+        }
+
+        /* A "Lousa" onde a mágica acontece */
+        .game-board {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            width: 90%;
+            max-width: 400px;
+            margin-bottom: 20px;
+        }
+
+        /* A frase em inglês */
+        .sentence-container {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        /* O buraco onde entra o modal */
+        .slot {
+            display: inline-block;
+            width: 100px;
+            border-bottom: 3px solid #333;
+            color: #007bff;
+            text-align: center;
+        }
+
+        /* A tradução dinâmica */
+        .translation {
+            font-size: 18px;
+            color: #666;
+            font-style: italic;
+            height: 30px; /* Reserva espaço para não pular */
+        }
+
+        /* Área dos botões (Modais) */
+        .controls {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        .modal-btn {
+            background-color: #4CAF50;
+            border: none;
+            color: white;
+            padding: 15px;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: transform 0.1s;
+            box-shadow: 0 4px #2e7d32;
+        }
+
+        .modal-btn:active {
+            transform: translateY(4px);
+            box-shadow: none;
+        }
+
+        /* Personagem/Ícone de feedback */
+        .character-feedback {
+            font-size: 60px;
+            margin: 10px 0;
+            height: 80px;
+        }
+        
+        .reset-btn {
+            margin-top: 20px;
+            background: #ff4444;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 20px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>🇬🇧 English 4 my kid</h1>
+
+    <div class="game-board">
+        <div class="character-feedback" id="feedback-icon">😐</div>
+
+        <div class="sentence-container">
+            I <span class="slot" id="modal-slot">___</span> SPEAK
+        </div>
+
+        <div class="translation" id="translation-text">Eu _____ falar.</div>
+    </div>
+
+    <h3>Escolha o poder:</h3>
+    
+    <div class="controls">
+        <button class="modal-btn" onclick="escolherModal('WILL', 'Eu falarei', '🚀')">WILL</button>
+        <button class="modal-btn" onclick="escolherModal('WOULD', 'Eu falaria', '💭')">WOULD</button>
+        <button class="modal-btn" onclick="escolherModal('CAN', 'Eu posso', '💪')">CAN</button>
+        <button class="modal-btn" onclick="escolherModal('COULD', 'Eu poderia', '🤔')">COULD</button>
+        <button class="modal-btn" onclick="escolherModal('SHOULD', 'Eu deveria', '😇')">SHOULD</button>
+        <button class="modal-btn" onclick="escolherModal('MAY', 'Eu devo', '☝️')">MAY</button>
+    </div>
+
+    <button class="reset-btn" onclick="resetar()">Limpar</button>
+
+    <script>
+        // LÓGICA DO JOGO (JAVASCRIPT)
+        
+        function escolherModal(palavraIngles, traducaoPt, emoji) {
+            // 1. Preenche o espaço em branco na frase em inglês
+            document.getElementById('modal-slot').innerText = palavraIngles;
+            
+            // 2. Muda a tradução em português
+            document.getElementById('translation-text').innerText = traducaoPt + " falar.";
+            
+            // 3. Muda o ícone/personagem para dar feedback visual
+            document.getElementById('feedback-icon').innerText = emoji;
+        }
+
+        function resetar() {
+            document.getElementById('modal-slot').innerText = "___";
+            document.getElementById('translation-text').innerText = "Eu _____ falar.";
+            document.getElementById('feedback-icon').innerText = "😐";
+        }
+    </script>
+
+</body>
+</html>
