@@ -10,6 +10,7 @@
             --primary: #FF6600;
             --secondary: #4CAF50;
             --bg: #f0f8ff;
+            --wrong: #ff4444;
         }
         body {
             font-family: 'Comic Sans MS', 'Arial', sans-serif;
@@ -17,82 +18,76 @@
             margin: 0;
             padding: 20px;
             text-align: center;
+            user-select: none; /* Evita selecionar texto ao clicar rápido */
         }
         h1 { color: var(--primary); margin-bottom: 10px; }
         
         /* MENU PRINCIPAL */
         .menu-grid {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
             gap: 15px;
-            max-width: 500px;
+            max-width: 600px;
             margin: 20px auto;
         }
         .menu-card {
             background: white;
-            padding: 20px;
+            padding: 15px;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.1);
             cursor: pointer;
             transition: transform 0.2s;
             border: 3px solid transparent;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
         }
         .menu-card:active { transform: scale(0.95); }
-        .menu-card h3 { margin: 10px 0 0 0; color: #333; }
-        .menu-icon { font-size: 40px; }
+        .menu-card h3 { margin: 10px 0 0 0; color: #333; font-size: 16px; }
+        .menu-icon { font-size: 35px; }
         
-        /* TELAS DOS JOGOS (Escondidas por padrão) */
+        /* TELAS DOS JOGOS */
         .game-screen {
-            display: none; /* O Segredo: Esconde tudo que não está ativo */
+            display: none;
             max-width: 500px;
             margin: 0 auto;
             background: white;
             padding: 20px;
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+            animation: fadeIn 0.4s;
         }
-        .active { display: block; animation: fadeIn 0.5s; }
+        .active { display: block; }
         
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* BOTÃO VOLTAR */
         .back-btn {
-            background: #ddd;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            margin-bottom: 20px;
-            cursor: pointer;
-            font-weight: bold;
+            background: #eee; border: none; padding: 8px 15px;
+            border-radius: 20px; margin-bottom: 15px; cursor: pointer;
+            font-weight: bold; color: #555;
         }
 
-        /* --- ESTILOS ESPECÍFICOS DOS JOGOS --- */
-
-        /* JOGO 1: MODAIS */
+        /* --- JOGO 1: MODAIS --- */
         .slot { border-bottom: 3px solid #333; color: #007bff; min-width: 50px; display: inline-block; }
+        .btn-grid { display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
         
-        /* JOGO 2: DEMONSTRATIVOS */
+        /* --- JOGO 2: DEMONSTRATIVOS --- */
         .demo-scene { 
-            height: 150px; 
-            display: flex; 
-            align-items: center; 
-            justify-content: center; 
-            position: relative;
-            background: #e6f2ff;
-            border-radius: 10px;
-            margin: 20px 0;
-            overflow: hidden;
+            height: 150px; display: flex; align-items: center; justify-content: center; 
+            position: relative; background: #e6f2ff; border-radius: 10px; margin: 20px 0; overflow: hidden;
         }
-        .hand { font-size: 60px; position: absolute; left: 20px; z-index: 2; }
+        .hand { font-size: 60px; position: absolute; left: 20px; z-index: 2; transition: left 0.5s; }
         .apples { font-size: 40px; position: absolute; transition: all 0.5s; }
         .toggle-btn {
             background: #eee; border: 2px solid #ccc; padding: 10px; margin: 5px;
-            border-radius: 10px; cursor: pointer; width: 45%;
+            border-radius: 10px; cursor: pointer; flex: 1;
         }
         .toggle-btn.selected { background: #FFD700; border-color: #FFA500; }
         .result-box { font-size: 40px; font-weight: bold; color: var(--secondary); margin-top: 10px; }
 
-        /* JOGO 3: PREPOSIÇÕES */
+        /* --- JOGO 3: PREPOSIÇÕES --- */
         .box-scene {
             height: 200px; position: relative; background: #fff3e0; 
             border-radius: 10px; margin: 20px 0; display: flex; justify-content: center; align-items: center;
@@ -100,13 +95,37 @@
         .the-box { width: 100px; height: 100px; background: #8B4513; position: relative; z-index: 1; }
         .the-cat { font-size: 40px; position: absolute; transition: all 0.5s; z-index: 2; }
         
-        /* JOGO 4: DIREÇÕES */
+        /* --- JOGO 4: DIREÇÕES --- */
         .map-grid {
             width: 200px; height: 200px; background: #333; margin: 0 auto;
-            position: relative; border-radius: 10px;
+            position: relative; border-radius: 10px; overflow: hidden;
         }
-        .car { font-size: 40px; position: absolute; bottom: 10px; left: 80px; transition: all 0.5s; transform-origin: center; }
-        .arrow-btn { font-size: 30px; padding: 10px 20px; margin: 5px; cursor: pointer; }
+        .road-line { 
+            position: absolute; width: 10px; height: 100%; background: #fff; left: 95px; border-left: 2px dashed #333; 
+        }
+        .car { font-size: 40px; position: absolute; bottom: 10px; left: 80px; transition: all 0.5s; transform-origin: center; z-index: 2; }
+        .arrow-btn { font-size: 24px; padding: 15px; margin: 5px; cursor: pointer; border-radius: 10px; border: 1px solid #ccc; background: #f9f9f9; }
+
+        /* --- JOGO 5: TO BE (NOVO) --- */
+        .tobe-card {
+            font-size: 40px; font-weight: bold; margin: 20px 0;
+            color: #333;
+        }
+        .tobe-options {
+            display: flex; justify-content: space-around; gap: 10px;
+        }
+        .tobe-btn {
+            background: #2196F3; color: white; border: none;
+            padding: 15px; border-radius: 50%; width: 80px; height: 80px;
+            font-size: 20px; font-weight: bold; cursor: pointer;
+            transition: transform 0.2s, background 0.3s;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .tobe-btn:active { transform: scale(0.9); }
+        .correct { background-color: var(--secondary) !important; transform: scale(1.1); }
+        .wrong { background-color: var(--wrong) !important; animation: shake 0.3s; }
+        
+        @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } 100% { transform: translateX(0); } }
 
     </style>
 </head>
@@ -115,7 +134,7 @@
     <h1>🇬🇧 English 4 my kid</h1>
 
     <div id="main-menu" class="active">
-        <p>O que vamos aprender hoje?</p>
+        <p>Escolha sua aventura:</p>
         <div class="menu-grid">
             <div class="menu-card" onclick="abrirJogo('modais')">
                 <div class="menu-icon">🚀</div>
@@ -133,6 +152,10 @@
                 <div class="menu-icon">🚗</div>
                 <h3>Direção<br>(Left/Right)</h3>
             </div>
+            <div class="menu-card" onclick="abrirJogo('tobe')" style="border-color: #2196F3;">
+                <div class="menu-icon">⭐</div>
+                <h3>Ser/Estar<br>(Am/Is/Are)</h3>
+            </div>
         </div>
     </div>
 
@@ -145,7 +168,7 @@
         <div style="font-size: 50px;" id="modal-feedback">😐</div>
         <div style="font-style: italic; color: #666;" id="modal-traducao">Eu _____ falar.</div>
         <hr>
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+        <div class="btn-grid">
             <button class="menu-card" onclick="setModal('WILL', 'falarei', '🚀')">WILL<br><small>(Futuro)</small></button>
             <button class="menu-card" onclick="setModal('WOULD', 'falaria', '💭')">WOULD<br><small>(Sonho)</small></button>
             <button class="menu-card" onclick="setModal('CAN', 'posso', '💪')">CAN<br><small>(Poder)</small></button>
@@ -158,7 +181,7 @@
         <h2>Este ou Aquele?</h2>
         
         <div class="demo-scene">
-            <div class="hand">👈</div>
+            <div class="hand" id="hand-icon">👈</div>
             <div class="apples" id="apples">🍎</div>
         </div>
 
@@ -186,7 +209,7 @@
         
         <h3 id="prepo-text" style="color:var(--primary)">The cat is...</h3>
 
-        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+        <div class="btn-grid">
             <button class="menu-card" onclick="moverGato('IN')">IN<br><small>(Dentro)</small></button>
             <button class="menu-card" onclick="moverGato('ON')">ON<br><small>(Em cima)</small></button>
             <button class="menu-card" onclick="moverGato('UNDER')">UNDER<br><small>(Embaixo)</small></button>
@@ -199,105 +222,115 @@
         <h2>Motorista Maluco</h2>
         
         <div class="map-grid">
+            <div class="road-line"></div>
             <div class="car" id="car">🚗</div>
         </div>
         
         <h3 id="dir-text">Go Straight!</h3>
 
-        <div>
+        <div style="display: flex; justify-content: center;">
             <button class="arrow-btn" onclick="moverCarro('left')">⬅ Left</button>
             <button class="arrow-btn" onclick="moverCarro('straight')">⬆ Straight</button>
             <button class="arrow-btn" onclick="moverCarro('right')">Right ➡</button>
         </div>
     </div>
 
+    <div id="game-tobe" class="game-screen">
+        <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
+        <h2>O Trio Mágico</h2>
+        <p>Combine a pessoa com o verbo!</p>
+        
+        <div class="tobe-card">
+            <span id="subject-text">SHE</span> 
+            <span style="color:#ccc">___</span> 
+            <span id="complement-text">HAPPY</span>
+        </div>
+        
+        <div class="tobe-options">
+            <button class="tobe-btn" id="btn-am" onclick="checkToBe('AM')">AM</button>
+            <button class="tobe-btn" id="btn-is" onclick="checkToBe('IS')">IS</button>
+            <button class="tobe-btn" id="btn-are" onclick="checkToBe('ARE')">ARE</button>
+        </div>
+        
+        <p id="tobe-feedback" style="height: 30px; font-weight: bold; color: var(--primary);"></p>
+        
+        <button class="back-btn" onclick="nextQuestion()" style="background:var(--primary); color:white; width:100%; margin-top:20px;">Próxima ➡</button>
+    </div>
+
     <script>
-        // --- LÓGICA GERAL (NAVEGAÇÃO) ---
+        // --- LÓGICA GERAL ---
         function abrirJogo(id) {
             document.getElementById('main-menu').style.display = 'none';
             document.getElementById('game-' + id).style.display = 'block';
             document.getElementById('game-' + id).classList.add('active');
+            
+            // Inits especiais
+            if(id === 'demo') setDemo('near');
+            if(id === 'tobe') nextQuestion();
         }
 
         function voltarMenu() {
-            // Esconde todas as telas de jogo
             var telas = document.getElementsByClassName('game-screen');
             for(var i=0; i<telas.length; i++) {
                 telas[i].style.display = 'none';
             }
-            // Mostra o menu
             document.getElementById('main-menu').style.display = 'block';
         }
 
-        // --- JOGO 1: MODAIS ---
+        // --- JOGO 1 ---
         function setModal(word, translation, emoji) {
             document.getElementById('modal-slot').innerText = word;
             document.getElementById('modal-traducao').innerText = "Eu " + translation + " falar.";
             document.getElementById('modal-feedback').innerText = emoji;
         }
 
-        // --- JOGO 2: DEMONSTRATIVOS ---
+        // --- JOGO 2 ---
         let isNear = true;
         let isSingular = true;
-
         function setDemo(type) {
-            // Atualiza estado
             if(type === 'near') isNear = true;
             if(type === 'far') isNear = false;
             if(type === 'one') isSingular = true;
             if(type === 'many') isSingular = false;
 
-            // Atualiza botões visuais
             document.getElementById('btn-near').className = isNear ? 'toggle-btn selected' : 'toggle-btn';
             document.getElementById('btn-far').className = !isNear ? 'toggle-btn selected' : 'toggle-btn';
             document.getElementById('btn-one').className = isSingular ? 'toggle-btn selected' : 'toggle-btn';
             document.getElementById('btn-many').className = !isSingular ? 'toggle-btn selected' : 'toggle-btn';
 
-            // Lógica Visual
             const apples = document.getElementById('apples');
             apples.innerText = isSingular ? '🍎' : '🍎🍎🍎';
-            apples.style.left = isNear ? '100px' : '250px'; // Perto da mão ou longe
-            apples.style.transform = isNear ? 'scale(1)' : 'scale(0.6)'; // Longe fica menor
+            apples.style.left = isNear ? '100px' : '200px'; 
+            apples.style.transform = isNear ? 'scale(1)' : 'scale(0.6)';
 
-            // Lógica do Texto (A Regra do Prof Kenny)
             let result = "";
             let explanation = "";
-            
-            if (isNear && isSingular) { result = "THIS"; explanation = "Perto e Um só (Este)"; }
-            else if (!isNear && isSingular) { result = "THAT"; explanation = "Longe e Um só (Aquele)"; }
-            else if (isNear && !isSingular) { result = "THESE"; explanation = "Perto e Vários (Estes)"; }
-            else if (!isNear && !isSingular) { result = "THOSE"; explanation = "Longe e Vários (Aqueles)"; }
+            if (isNear && isSingular) { result = "THIS"; explanation = "Perto e Um só"; }
+            else if (!isNear && isSingular) { result = "THAT"; explanation = "Longe e Um só"; }
+            else if (isNear && !isSingular) { result = "THESE"; explanation = "Perto e Vários"; }
+            else if (!isNear && !isSingular) { result = "THOSE"; explanation = "Longe e Vários"; }
 
             document.getElementById('demo-result').innerText = result;
             document.getElementById('demo-explanation').innerText = explanation;
         }
 
-        // --- JOGO 3: PREPOSIÇÕES ---
+        // --- JOGO 3 ---
         function moverGato(pos) {
             const cat = document.getElementById('cat');
             const text = document.getElementById('prepo-text');
             text.innerText = "The cat is " + pos + " the box";
+            cat.style.zIndex = 2; cat.style.opacity = 1;
 
-            // Reset
-            cat.style.zIndex = 2;
-            cat.style.opacity = 1;
-
-            if(pos === 'IN') {
-                cat.style.top = '15px'; // Dentro visualmente
-                cat.style.zIndex = 0; // Atrás da borda da caixa
-            } else if (pos === 'ON') {
-                cat.style.top = '-35px'; // Em cima
-            } else if (pos === 'UNDER') {
-                cat.style.top = '105px'; // Embaixo
-            } else if (pos === 'NEXT TO') {
-                cat.style.top = '40px';
-                cat.style.left = '160px'; // Lado direito (usando margin/transform no CSS real seria melhor, mas aqui simula)
-                setTimeout(() => { cat.style.left = ''; }, 1000); // Volta depois
-                return; // Sai para não bugar o top
+            if(pos === 'IN') { cat.style.top = '15px'; cat.style.zIndex = 0; } 
+            else if (pos === 'ON') { cat.style.top = '-35px'; } 
+            else if (pos === 'UNDER') { cat.style.top = '105px'; } 
+            else if (pos === 'NEXT TO') { 
+                cat.style.top = '40px'; cat.style.left = '160px'; 
+                setTimeout(() => { cat.style.left = ''; }, 1000); 
             }
         }
 
-        // --- JOGO 4: DIREÇÕES ---
+        // --- JOGO 4 ---
         function moverCarro(dir) {
             const car = document.getElementById('car');
             const text = document.getElementById('dir-text');
@@ -316,9 +349,53 @@
                 setTimeout(() => { car.style.transform = "rotate(0)"; }, 1000);
             }
         }
+
+        // --- JOGO 5: TO BE (NOVO) ---
+        // Lista de perguntas (Subject, Correct Answer, Complement)
+        const questions = [
+            { sub: "I", ans: "AM", comp: "HAPPY" },
+            { sub: "YOU", ans: "ARE", comp: "MY FRIEND" },
+            { sub: "SHE", ans: "IS", comp: "A DOCTOR" },
+            { sub: "HE", ans: "IS", comp: "FAST" },
+            { sub: "IT", ans: "IS", comp: "A CAT" },
+            { sub: "WE", ans: "ARE", comp: "FAMILY" },
+            { sub: "THEY", ans: "ARE", comp: "PLAYING" }
+        ];
         
-        // Iniciar o jogo Demonstrativos corretamente
-        setDemo('near');
+        let currentQ = null;
+
+        function nextQuestion() {
+            // Escolhe uma pergunta aleatória
+            currentQ = questions[Math.floor(Math.random() * questions.length)];
+            
+            document.getElementById('subject-text').innerText = currentQ.sub;
+            document.getElementById('complement-text').innerText = currentQ.comp;
+            document.getElementById('tobe-feedback').innerText = "";
+            
+            // Resetar cores dos botões
+            document.getElementById('btn-am').className = "tobe-btn";
+            document.getElementById('btn-is').className = "tobe-btn";
+            document.getElementById('btn-are').className = "tobe-btn";
+        }
+
+        function checkToBe(choice) {
+            if(!currentQ) return;
+
+            const btn = document.getElementById('btn-' + choice.toLowerCase());
+            
+            if(choice === currentQ.ans) {
+                // Acertou
+                btn.classList.add('correct');
+                document.getElementById('tobe-feedback').innerText = "Muito bem! " + currentQ.sub + " " + choice + " " + currentQ.comp;
+                // Efeito sonoro fake (Emoji)
+            } else {
+                // Errou
+                btn.classList.add('wrong');
+                document.getElementById('tobe-feedback').innerText = "Ops! Tente de novo.";
+                setTimeout(() => { btn.classList.remove('wrong'); }, 500);
+            }
+        }
+
     </script>
 
 </body>
