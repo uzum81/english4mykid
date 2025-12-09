@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English 4 my kid - Mega Pack</title>
+    <title>English 4 my kid - Ultra Pack</title>
     <style>
         /* --- ESTILOS GERAIS --- */
         :root {
@@ -14,6 +14,7 @@
             --blue: #2196F3;
             --purple: #9C27B0;
             --pink: #E91E63;
+            --teal: #009688;
         }
         body {
             font-family: 'Comic Sans MS', 'Arial', sans-serif;
@@ -22,13 +23,14 @@
             padding: 10px;
             text-align: center;
             user-select: none;
+            padding-bottom: 50px;
         }
         h1 { color: var(--primary); margin: 10px 0; font-size: 24px; }
         
         /* --- MENU PRINCIPAL --- */
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 colunas para caber tudo */
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             max-width: 600px;
             margin: 0 auto;
@@ -84,16 +86,21 @@
         @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } 100% { transform: translateX(0); } }
 
         /* --- ESTILOS ESPECÍFICOS --- */
-        /* Candy Shop */
-        .candy-shelf {
-            background: #FFEBEE; border: 4px solid var(--pink); border-radius: 10px;
-            padding: 10px; margin: 10px 0; display: inline-block;
+        /* Reading / Story Time */
+        .story-box {
+            background: #fff9c4; border: 2px dashed #fbc02d; padding: 20px;
+            border-radius: 10px; font-size: 20px; text-align: left; line-height: 1.5;
+            margin-bottom: 20px; color: #444;
         }
+        .question-box { font-weight: bold; margin-bottom: 10px; font-size: 18px; color: var(--primary); }
+
+        /* Candy Shop */
+        .candy-shelf { background: #FFEBEE; border: 4px solid var(--pink); border-radius: 10px; padding: 10px; margin: 10px 0; display: inline-block; }
         .candy-row { display: flex; justify-content: center; gap: 10px; margin: 5px 0; }
         .candy-item { font-size: 30px; animation: popIn 0.3s; }
         @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
         
-        /* Outros jogos (Simplificados para manter o código limpo) */
+        /* Outros (Legacy) */
         .slot { border-bottom: 3px solid #333; color: #007bff; min-width: 50px; display: inline-block; }
         .demo-scene { height: 120px; position: relative; background: #e6f2ff; border-radius: 10px; margin: 10px 0; overflow: hidden; }
         .hand { font-size: 50px; position: absolute; left: 10px; top: 30px; z-index: 2; }
@@ -110,10 +117,14 @@
 </head>
 <body>
 
-    <h1>English 4 my kid</h1>
+    <h1>🇬🇧 English 4 my kid</h1>
 
     <div id="main-menu" class="active">
         <div class="menu-grid">
+            <div class="menu-card" onclick="abrirJogo('reading')" style="border-color: var(--teal);">
+                <div class="menu-icon">📖</div>
+                <h3 style="color:var(--teal)">História<br>(Reading)</h3>
+            </div>
             <div class="menu-card" onclick="abrirJogo('candy')" style="border-color: var(--pink);">
                 <div class="menu-icon">🍬</div>
                 <h3 style="color:var(--pink)">Candy Shop<br>(Math)</h3>
@@ -122,11 +133,11 @@
                 <div class="menu-icon">🚀</div>
                 <h3>Poderes<br>(Modals)</h3>
             </div>
+            
             <div class="menu-card" onclick="abrirJogo('demo')">
                 <div class="menu-icon">👉</div>
                 <h3>Apontar<br>(This/That)</h3>
             </div>
-            
             <div class="menu-card" onclick="abrirJogo('prepo')">
                 <div class="menu-icon">📦</div>
                 <h3>Posição<br>(In/On)</h3>
@@ -135,11 +146,11 @@
                 <div class="menu-icon">🚗</div>
                 <h3>Direção<br>(Left/Right)</h3>
             </div>
+            
             <div class="menu-card" onclick="abrirJogo('tobe')">
                 <div class="menu-icon">⭐</div>
                 <h3>Ser/Estar<br>(Am/Is/Are)</h3>
             </div>
-            
             <div class="menu-card" onclick="abrirJogo('colors')">
                 <div class="menu-icon">🎨</div>
                 <h3>Cores<br>(Colors)</h3>
@@ -148,35 +159,47 @@
                 <div class="menu-icon">👾</div>
                 <h3>Corpo<br>(Body)</h3>
             </div>
-            <div class="menu-card" onclick="abrirJogo('detective')">
+
+             <div class="menu-card" onclick="abrirJogo('detective')">
                 <div class="menu-icon">🕵️</div>
                 <h3>Perguntas<br>(Wh-)</h3>
             </div>
         </div>
     </div>
 
+    <div id="game-reading" class="game-screen">
+        <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
+        <h2 style="color:var(--teal)">Story Time</h2>
+        
+        <div class="story-box">
+            <span id="story-text">Loading story...</span>
+        </div>
+
+        <div class="question-box" id="story-question">Question here?</div>
+
+        <div id="story-options" style="display:grid; grid-template-columns: 1fr; gap:10px;">
+            </div>
+        
+        <p id="story-msg" style="height:20px; color:var(--teal); font-weight:bold;"></p>
+        <button class="back-btn" onclick="nextStory()" style="background:var(--teal); color:white;">Próxima História ➡</button>
+    </div>
+
     <div id="game-candy" class="game-screen">
         <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
         <h2 style="color:var(--pink)">Candy Shop</h2>
         <p>Quantos doces no total?</p>
-        
-        <div id="candy-container" style="min-height: 150px; display:flex; align-items:center; justify-content:center;">
-            </div>
-
+        <div id="candy-container" style="min-height: 150px; display:flex; align-items:center; justify-content:center;"></div>
         <div style="font-size: 20px; margin-bottom: 10px; font-weight: bold; color: #666;">
             <span id="candy-math-text">2 rows of 3</span>
         </div>
-
-        <div id="candy-options" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-            </div>
-        
+        <div id="candy-options" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;"></div>
         <p id="candy-msg" style="height:20px; color:var(--pink); font-weight:bold;"></p>
-        <button class="back-btn" onclick="nextCandy()" style="background:var(--pink); color:white;">Próximo Pedido ➡</button>
+        <button class="back-btn" onclick="nextCandy()" style="background:var(--pink); color:white;">Próximo ➡</button>
     </div>
 
     <div id="game-modais" class="game-screen">
         <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
-        <h2>Os Poderes Mágicos</h2>
+        <h2>Os Poderes</h2>
         <div style="font-size: 24px; margin: 20px;">I <span class="slot" id="modal-slot">___</span> SPEAK</div>
         <div style="font-size: 50px;" id="modal-feedback">😐</div>
         <div style="font-style: italic; color: #666;" id="modal-traducao">Eu _____ falar.</div>
@@ -205,10 +228,7 @@
     <div id="game-prepo" class="game-screen">
         <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
         <h2>Onde está o Gato?</h2>
-        <div class="box-scene">
-            <div class="the-box"></div>
-            <div class="the-cat" id="cat">🐱</div>
-        </div>
+        <div class="box-scene"><div class="the-box"></div><div class="the-cat" id="cat">🐱</div></div>
         <h3 id="prepo-text">The cat is...</h3>
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
             <button class="btn-option" onclick="moverGato('IN')">IN</button>
@@ -234,9 +254,7 @@
     <div id="game-tobe" class="game-screen">
         <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
         <h2>Ser ou Estar?</h2>
-        <div style="font-size:30px; margin:20px;">
-            <span id="tb-sub">SHE</span> <span style="color:var(--primary)">___</span> <span id="tb-comp">HAPPY</span>
-        </div>
+        <div style="font-size:30px; margin:20px;"><span id="tb-sub">SHE</span> <span style="color:var(--primary)">___</span> <span id="tb-comp">HAPPY</span></div>
         <div style="display:flex; gap:10px;">
             <button id="btn-am" class="btn-option" onclick="checkToBe('AM')">AM</button>
             <button id="btn-is" class="btn-option" onclick="checkToBe('IS')">IS</button>
@@ -250,11 +268,7 @@
         <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
         <h2>O Artista</h2>
         <div class="color-mixer">
-            <div class="paint-bucket" id="c1" style="background:#ddd;"></div>
-            <span>+</span>
-            <div class="paint-bucket" id="c2" style="background:#ddd;"></div>
-            <span>=</span>
-            <div class="paint-bucket" id="res" style="background:white; border-style:dashed;"></div>
+            <div class="paint-bucket" id="c1" style="background:#ddd;"></div><span>+</span><div class="paint-bucket" id="c2" style="background:#ddd;"></div><span>=</span><div class="paint-bucket" id="res" style="background:white; border-style:dashed;"></div>
         </div>
         <div style="display:flex; gap:5px;">
             <button class="btn-option" style="background:red; border-color:darkred;" onclick="pickColor('red')">RED</button>
@@ -267,11 +281,7 @@
     <div id="game-monster" class="game-screen">
         <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
         <h2>Monster Maker</h2>
-        <div class="monster-stage">
-            <div id="mon-head">👽</div>
-            <div id="mon-body" style="font-size:40px;">👕</div>
-            <div id="mon-legs" style="font-size:40px;">👖</div>
-        </div>
+        <div class="monster-stage"><div id="mon-head">👽</div><div id="mon-body" style="font-size:40px;">👕</div><div id="mon-legs" style="font-size:40px;">👖</div></div>
         <div class="part-control"><span>HEAD</span><button onclick="changePart('head')">➡</button></div>
         <div class="part-control"><span>BODY</span><button onclick="changePart('body')">➡</button></div>
         <div class="part-control"><span>LEGS</span><button onclick="changePart('legs')">➡</button></div>
@@ -303,6 +313,7 @@
             if(id === 'tobe') nextToBe();
             if(id === 'colors') resetColor();
             if(id === 'candy') nextCandy();
+            if(id === 'reading') nextStory();
         }
 
         function voltarMenu() {
@@ -310,57 +321,104 @@
             document.getElementById('main-menu').style.display = 'block';
         }
 
-        // --- JOGO 10: CANDY SHOP (LOGICA) ---
+        // --- JOGO 11: READING COMPREHENSION (NOVO) ---
+        const stories = [
+            {
+                text: "The dog 🐶 is <b style='color:brown'>brown</b>. He likes to run in the park 🌳.",
+                question: "What color is the dog?",
+                options: ["Black", "Brown", "White"],
+                answer: "Brown"
+            },
+            {
+                text: "Maria loves 🍕 pizza. She eats pizza for dinner on <b style='color:blue'>Fridays</b>.",
+                question: "When does she eat pizza?",
+                options: ["Mondays", "Fridays", "Sundays"],
+                answer: "Fridays"
+            },
+            {
+                text: "Look at the sky! It is <b style='color:orange'>sunny</b> ☀️ today. Let's go to the beach 🏖️.",
+                question: "How is the weather?",
+                options: ["Rainy", "Sunny", "Cloudy"],
+                answer: "Sunny"
+            },
+            {
+                text: "My cat 🐱 is big. He sleeps 💤 on the <b style='color:green'>green</b> sofa.",
+                question: "Where does the cat sleep?",
+                options: ["On the bed", "In the box", "On the sofa"],
+                answer: "On the sofa"
+            }
+        ];
+        
+        let currentStory = 0;
+
+        function nextStory() {
+            // Se chegou ao fim, volta ao começo
+            if(currentStory >= stories.length) currentStory = 0;
+            
+            const s = stories[currentStory];
+            
+            // Renderizar
+            document.getElementById('story-text').innerHTML = s.text;
+            document.getElementById('story-question').innerText = s.question;
+            document.getElementById('story-msg').innerText = "";
+            
+            // Opções
+            let html = "";
+            s.options.forEach(opt => {
+                html += `<button class="btn-option" onclick="checkStory('${opt}', '${s.answer}', this)">${opt}</button>`;
+            });
+            document.getElementById('story-options').innerHTML = html;
+        }
+
+        function checkStory(choice, correct, btn) {
+            if(choice === correct) {
+                btn.classList.add('correct');
+                document.getElementById('story-msg').innerText = "Correct! Well done!";
+                // Avança automaticamente após 1.5s
+                setTimeout(() => {
+                    currentStory++;
+                    nextStory();
+                }, 1500);
+            } else {
+                btn.classList.add('wrong');
+                document.getElementById('story-msg').innerText = "Try again!";
+            }
+        }
+
+        // --- JOGO 10: CANDY SHOP ---
         let candyTotal = 0;
         const candyTypes = ['🍬', '🍭', '🍫', '🧁'];
-        
         function nextCandy() {
-            const rows = Math.floor(Math.random() * 3) + 1; // 1 a 3 linhas
-            const cols = Math.floor(Math.random() * 4) + 1; // 1 a 4 colunas
+            const rows = Math.floor(Math.random() * 3) + 1;
+            const cols = Math.floor(Math.random() * 4) + 1;
             candyTotal = rows * cols;
             const sweet = candyTypes[Math.floor(Math.random() * candyTypes.length)];
-            
-            // Gerar Visual (Prateleira)
             let html = '<div class="candy-shelf">';
             for(let r=0; r<rows; r++) {
                 html += '<div class="candy-row">';
-                for(let c=0; c<cols; c++) {
-                    html += `<div class="candy-item">${sweet}</div>`;
-                }
+                for(let c=0; c<cols; c++) html += `<div class="candy-item">${sweet}</div>`;
                 html += '</div>';
             }
             html += '</div>';
             document.getElementById('candy-container').innerHTML = html;
-            
-            // Texto Educativo
             document.getElementById('candy-math-text').innerText = `${rows} rows of ${cols}`;
             document.getElementById('candy-msg').innerText = "";
-
-            // Opções de Resposta (1 Certa, 3 Erradas)
             let opts = [candyTotal];
             while(opts.length < 4) {
                 let wrong = Math.floor(Math.random() * 12) + 1;
                 if(!opts.includes(wrong)) opts.push(wrong);
             }
-            opts.sort(() => Math.random() - 0.5); // Embaralhar
-
+            opts.sort(() => Math.random() - 0.5);
             let btnHtml = "";
-            opts.forEach(num => {
-                btnHtml += `<button class="btn-option" onclick="checkCandy(${num}, this)">${num}</button>`;
-            });
+            opts.forEach(num => btnHtml += `<button class="btn-option" onclick="checkCandy(${num}, this)">${num}</button>`);
             document.getElementById('candy-options').innerHTML = btnHtml;
         }
-
         function checkCandy(ans, btn) {
-            if(ans === candyTotal) {
-                btn.classList.add('correct');
-                document.getElementById('candy-msg').innerText = "Yummy! Correct!";
-            } else {
-                btn.classList.add('wrong');
-            }
+            if(ans === candyTotal) { btn.classList.add('correct'); document.getElementById('candy-msg').innerText = "Yummy!"; } 
+            else { btn.classList.add('wrong'); }
         }
 
-        // --- OUTROS JOGOS (MANTIDOS) ---
+        // --- OUTRAS FUNÇÕES (LEGACY) ---
         function setModal(w, t, e) {
             document.getElementById('modal-slot').innerText = w;
             document.getElementById('modal-traducao').innerText = "Eu " + t + " falar.";
@@ -368,26 +426,19 @@
         }
         let dNear = true, dOne = true;
         function toggleDemo(type) {
-            if(type === 'near') dNear = !dNear;
-            if(type === 'one') dOne = !dOne;
+            if(type === 'near') dNear = !dNear; if(type === 'one') dOne = !dOne;
             const apples = document.getElementById('apples');
             apples.innerText = dOne ? '🍎' : '🍎🍎🍎';
             apples.style.left = dNear ? '70px' : '200px';
             apples.style.transform = dNear ? 'scale(1)' : 'scale(0.6)';
-            let res = "THIS";
-            if(!dNear && dOne) res = "THAT";
-            if(dNear && !dOne) res = "THESE";
-            if(!dNear && !dOne) res = "THOSE";
+            let res = "THIS"; if(!dNear && dOne) res = "THAT"; if(dNear && !dOne) res = "THESE"; if(!dNear && !dOne) res = "THOSE";
             document.getElementById('demo-result').innerText = res;
         }
         function moverGato(p) {
             const c = document.getElementById('cat');
             document.getElementById('prepo-text').innerText = "The cat is " + p;
             c.style.opacity = 1; c.style.zIndex = 2;
-            if(p === 'IN') { c.style.top = '50%'; c.style.zIndex = 0; } 
-            else if(p === 'ON') { c.style.top = '10%'; }
-            else if(p === 'UNDER') { c.style.top = '90%'; }
-            else { c.style.left = '80%'; setTimeout(()=>c.style.left='50%',1000); }
+            if(p === 'IN') { c.style.top = '50%'; c.style.zIndex = 0; } else if(p === 'ON') { c.style.top = '10%'; } else if(p === 'UNDER') { c.style.top = '90%'; } else { c.style.left = '80%'; setTimeout(()=>c.style.left='50%',1000); }
         }
         function moverCarro(d) {
             const c = document.getElementById('car');
@@ -411,27 +462,20 @@
         }
         let picked = [];
         function pickColor(c) {
-            if(picked.length >= 2) return;
-            picked.push(c);
+            if(picked.length >= 2) return; picked.push(c);
             document.getElementById(picked.length === 1 ? 'c1' : 'c2').style.backgroundColor = c;
             if(picked.length === 2) {
-                let res = "gray";
-                if(picked.includes('red') && picked.includes('blue')) res = "purple";
-                if(picked.includes('red') && picked.includes('yellow')) res = "orange";
-                if(picked.includes('blue') && picked.includes('yellow')) res = "green";
+                let res = "gray"; if(picked.includes('red') && picked.includes('blue')) res = "purple";
+                if(picked.includes('red') && picked.includes('yellow')) res = "orange"; if(picked.includes('blue') && picked.includes('yellow')) res = "green";
                 if(picked[0] === picked[1]) res = picked[0];
                 document.getElementById('res').style.backgroundColor = res;
             }
         }
-        function resetColor() {
-            picked = [];
-            ['c1','c2','res'].forEach(id => document.getElementById(id).style.backgroundColor = (id==='res'?'white':'#ddd'));
-        }
+        function resetColor() { picked = []; ['c1','c2','res'].forEach(id => document.getElementById(id).style.backgroundColor = (id==='res'?'white':'#ddd')); }
         const parts = {head: ['👽','🤡','🤖','🎃','🐯'], body: ['👕','🎽','🥋','👔'], legs: ['👖','🩳','🧜‍♀️']};
         let pIdx = {head:0, body:0, legs:0};
         function changePart(type) {
-            pIdx[type]++;
-            if(pIdx[type] >= parts[type].length) pIdx[type] = 0;
+            pIdx[type]++; if(pIdx[type] >= parts[type].length) pIdx[type] = 0;
             document.getElementById('mon-'+type).innerText = parts[type][pIdx[type]];
         }
     </script>
