@@ -3,51 +3,54 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>English 4 my kid - Super Pack</title>
+    <title>English 4 my kid - Mega Pack</title>
     <style>
-        /* ESTILOS GERAIS */
+        /* --- ESTILOS GERAIS --- */
         :root {
             --primary: #FF6600;
             --secondary: #4CAF50;
             --bg: #f0f8ff;
             --wrong: #ff4444;
+            --blue: #2196F3;
+            --purple: #9C27B0;
         }
         body {
             font-family: 'Comic Sans MS', 'Arial', sans-serif;
             background-color: var(--bg);
             margin: 0;
-            padding: 20px;
+            padding: 10px;
             text-align: center;
-            user-select: none; /* Evita selecionar texto ao clicar rápido */
+            user-select: none;
         }
-        h1 { color: var(--primary); margin-bottom: 10px; }
+        h1 { color: var(--primary); margin: 10px 0; font-size: 24px; }
         
-        /* MENU PRINCIPAL */
+        /* --- MENU PRINCIPAL (GRID 3 COLUNAS) --- */
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
-            gap: 15px;
+            grid-template-columns: repeat(3, 1fr); /* 3 por linha no celular */
+            gap: 10px;
             max-width: 600px;
-            margin: 20px auto;
+            margin: 0 auto;
         }
         .menu-card {
             background: white;
-            padding: 15px;
+            padding: 10px;
             border-radius: 15px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             cursor: pointer;
             transition: transform 0.2s;
-            border: 3px solid transparent;
+            border-bottom: 4px solid #ddd;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            height: 100px;
         }
-        .menu-card:active { transform: scale(0.95); }
-        .menu-card h3 { margin: 10px 0 0 0; color: #333; font-size: 16px; }
-        .menu-icon { font-size: 35px; }
+        .menu-card:active { transform: translateY(4px); border-bottom: 0; }
+        .menu-card h3 { margin: 5px 0 0 0; color: #333; font-size: 13px; }
+        .menu-icon { font-size: 30px; }
         
-        /* TELAS DOS JOGOS */
+        /* --- TELAS DOS JOGOS --- */
         .game-screen {
             display: none;
             max-width: 500px;
@@ -57,75 +60,45 @@
             border-radius: 20px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.15);
             animation: fadeIn 0.4s;
+            min-height: 400px;
         }
         .active { display: block; }
-        
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* BOTÃO VOLTAR */
+        /* --- BOTÕES E COMPONENTES GERAIS --- */
         .back-btn {
             background: #eee; border: none; padding: 8px 15px;
-            border-radius: 20px; margin-bottom: 15px; cursor: pointer;
-            font-weight: bold; color: #555;
+            border-radius: 20px; margin-bottom: 10px; cursor: pointer;
+            font-weight: bold; color: #555; width: 100%;
         }
-
-        /* --- JOGO 1: MODAIS --- */
-        .slot { border-bottom: 3px solid #333; color: #007bff; min-width: 50px; display: inline-block; }
-        .btn-grid { display:grid; grid-template-columns: 1fr 1fr; gap:10px; }
-        
-        /* --- JOGO 2: DEMONSTRATIVOS --- */
-        .demo-scene { 
-            height: 150px; display: flex; align-items: center; justify-content: center; 
-            position: relative; background: #e6f2ff; border-radius: 10px; margin: 20px 0; overflow: hidden;
+        .btn-option {
+            background: var(--blue); color: white; border: none;
+            padding: 15px; margin: 5px; border-radius: 10px;
+            font-size: 18px; width: 100%; cursor: pointer;
+            border-bottom: 4px solid #1565C0;
         }
-        .hand { font-size: 60px; position: absolute; left: 20px; z-index: 2; transition: left 0.5s; }
-        .apples { font-size: 40px; position: absolute; transition: all 0.5s; }
-        .toggle-btn {
-            background: #eee; border: 2px solid #ccc; padding: 10px; margin: 5px;
-            border-radius: 10px; cursor: pointer; flex: 1;
-        }
-        .toggle-btn.selected { background: #FFD700; border-color: #FFA500; }
-        .result-box { font-size: 40px; font-weight: bold; color: var(--secondary); margin-top: 10px; }
-
-        /* --- JOGO 3: PREPOSIÇÕES --- */
-        .box-scene {
-            height: 200px; position: relative; background: #fff3e0; 
-            border-radius: 10px; margin: 20px 0; display: flex; justify-content: center; align-items: center;
-        }
-        .the-box { width: 100px; height: 100px; background: #8B4513; position: relative; z-index: 1; }
-        .the-cat { font-size: 40px; position: absolute; transition: all 0.5s; z-index: 2; }
-        
-        /* --- JOGO 4: DIREÇÕES --- */
-        .map-grid {
-            width: 200px; height: 200px; background: #333; margin: 0 auto;
-            position: relative; border-radius: 10px; overflow: hidden;
-        }
-        .road-line { 
-            position: absolute; width: 10px; height: 100%; background: #fff; left: 95px; border-left: 2px dashed #333; 
-        }
-        .car { font-size: 40px; position: absolute; bottom: 10px; left: 80px; transition: all 0.5s; transform-origin: center; z-index: 2; }
-        .arrow-btn { font-size: 24px; padding: 15px; margin: 5px; cursor: pointer; border-radius: 10px; border: 1px solid #ccc; background: #f9f9f9; }
-
-        /* --- JOGO 5: TO BE (NOVO) --- */
-        .tobe-card {
-            font-size: 40px; font-weight: bold; margin: 20px 0;
-            color: #333;
-        }
-        .tobe-options {
-            display: flex; justify-content: space-around; gap: 10px;
-        }
-        .tobe-btn {
-            background: #2196F3; color: white; border: none;
-            padding: 15px; border-radius: 50%; width: 80px; height: 80px;
-            font-size: 20px; font-weight: bold; cursor: pointer;
-            transition: transform 0.2s, background 0.3s;
-            display: flex; align-items: center; justify-content: center;
-        }
-        .tobe-btn:active { transform: scale(0.9); }
-        .correct { background-color: var(--secondary) !important; transform: scale(1.1); }
-        .wrong { background-color: var(--wrong) !important; animation: shake 0.3s; }
-        
+        .btn-option:active { transform: translateY(4px); border-bottom: 0; }
+        .correct { background-color: var(--secondary) !important; border-color: #2E7D32 !important; }
+        .wrong { background-color: var(--wrong) !important; border-color: #c62828 !important; animation: shake 0.3s; }
         @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } 100% { transform: translateX(0); } }
+
+        /* --- ESTILOS ESPECÍFICOS --- */
+        /* Modais */
+        .slot { border-bottom: 3px solid #333; color: #007bff; min-width: 50px; display: inline-block; }
+        /* Demo */
+        .demo-scene { height: 120px; position: relative; background: #e6f2ff; border-radius: 10px; margin: 10px 0; overflow: hidden; }
+        .hand { font-size: 50px; position: absolute; left: 10px; top: 30px; z-index: 2; }
+        .apples { font-size: 35px; position: absolute; top: 40px; transition: all 0.5s; }
+        /* Prepo */
+        .box-scene { height: 150px; position: relative; background: #fff3e0; border-radius: 10px; margin: 10px 0; }
+        .the-box { width: 80px; height: 80px; background: #8B4513; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+        .the-cat { font-size: 40px; position: absolute; transition: all 0.5s; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2; }
+        /* Colors */
+        .color-mixer { height: 100px; display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 30px; font-weight: bold; margin: 20px 0; }
+        .paint-bucket { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #333; }
+        /* Monster */
+        .monster-stage { background: #e0f7fa; height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 10px; font-size: 50px; line-height: 0.8; }
+        .part-control { display: flex; justify-content: space-between; align-items: center; background: #f0f0f0; margin: 5px 0; padding: 5px; border-radius: 10px; }
 
     </style>
 </head>
@@ -134,7 +107,6 @@
     <h1>🇬🇧 English 4 my kid</h1>
 
     <div id="main-menu" class="active">
-        <p>Escolha sua aventura:</p>
         <div class="menu-grid">
             <div class="menu-card" onclick="abrirJogo('modais')">
                 <div class="menu-icon">🚀</div>
@@ -152,9 +124,25 @@
                 <div class="menu-icon">🚗</div>
                 <h3>Direção<br>(Left/Right)</h3>
             </div>
-            <div class="menu-card" onclick="abrirJogo('tobe')" style="border-color: #2196F3;">
+            <div class="menu-card" onclick="abrirJogo('tobe')">
                 <div class="menu-icon">⭐</div>
                 <h3>Ser/Estar<br>(Am/Is/Are)</h3>
+            </div>
+            <div class="menu-card" onclick="abrirJogo('colors')">
+                <div class="menu-icon">🎨</div>
+                <h3>Cores<br>(Colors)</h3>
+            </div>
+            <div class="menu-card" onclick="abrirJogo('math')">
+                <div class="menu-icon">➗</div>
+                <h3>Números<br>(Math)</h3>
+            </div>
+            <div class="menu-card" onclick="abrirJogo('monster')">
+                <div class="menu-icon">👾</div>
+                <h3>Corpo<br>(Body)</h3>
+            </div>
+            <div class="menu-card" onclick="abrirJogo('detective')">
+                <div class="menu-icon">🕵️</div>
+                <h3>Perguntas<br>(Wh-)</h3>
             </div>
         </div>
     </div>
@@ -162,241 +150,284 @@
     <div id="game-modais" class="game-screen">
         <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
         <h2>Os Poderes Mágicos</h2>
-        <div style="font-size: 24px; margin: 20px;">
-            I <span class="slot" id="modal-slot">___</span> SPEAK
-        </div>
+        <div style="font-size: 24px; margin: 20px;">I <span class="slot" id="modal-slot">___</span> SPEAK</div>
         <div style="font-size: 50px;" id="modal-feedback">😐</div>
         <div style="font-style: italic; color: #666;" id="modal-traducao">Eu _____ falar.</div>
-        <hr>
-        <div class="btn-grid">
-            <button class="menu-card" onclick="setModal('WILL', 'falarei', '🚀')">WILL<br><small>(Futuro)</small></button>
-            <button class="menu-card" onclick="setModal('WOULD', 'falaria', '💭')">WOULD<br><small>(Sonho)</small></button>
-            <button class="menu-card" onclick="setModal('CAN', 'posso', '💪')">CAN<br><small>(Poder)</small></button>
-            <button class="menu-card" onclick="setModal('SHOULD', 'deveria', '😇')">SHOULD<br><small>(Conselho)</small></button>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px; margin-top:20px;">
+            <button class="btn-option" onclick="setModal('WILL', 'falarei', '🚀')">WILL</button>
+            <button class="btn-option" onclick="setModal('CAN', 'posso', '💪')">CAN</button>
+            <button class="btn-option" onclick="setModal('SHOULD', 'deveria', '😇')">SHOULD</button>
+            <button class="btn-option" onclick="setModal('MAY', 'devo', '☝️')">MAY</button>
         </div>
     </div>
 
     <div id="game-demo" class="game-screen">
         <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
         <h2>Este ou Aquele?</h2>
-        
         <div class="demo-scene">
-            <div class="hand" id="hand-icon">👈</div>
+            <div class="hand">👈</div>
             <div class="apples" id="apples">🍎</div>
         </div>
-
-        <div class="result-box" id="demo-result">THIS</div>
-        <p style="color:#666">Usamos para: <span id="demo-explanation">Perto e Um só</span></p>
-
-        <div style="display:flex; justify-content:space-between;">
-            <button class="toggle-btn selected" id="btn-near" onclick="setDemo('near')">Perto (Near)</button>
-            <button class="toggle-btn" id="btn-far" onclick="setDemo('far')">Longe (Far)</button>
-        </div>
-        <div style="display:flex; justify-content:space-between; margin-top:10px;">
-            <button class="toggle-btn selected" id="btn-one" onclick="setDemo('one')">Um (Singular)</button>
-            <button class="toggle-btn" id="btn-many" onclick="setDemo('many')">Vários (Plural)</button>
+        <div class="result-box" id="demo-result" style="font-size:30px; font-weight:bold; color:var(--primary)">THIS</div>
+        <div style="display:flex; gap:10px; margin-top:10px;">
+            <button class="btn-option" onclick="toggleDemo('near')" style="font-size:14px;">Perto/Longe</button>
+            <button class="btn-option" onclick="toggleDemo('one')" style="font-size:14px;">Um/Vários</button>
         </div>
     </div>
 
     <div id="game-prepo" class="game-screen">
         <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
         <h2>Onde está o Gato?</h2>
-        
         <div class="box-scene">
             <div class="the-box"></div>
             <div class="the-cat" id="cat">🐱</div>
         </div>
-        
-        <h3 id="prepo-text" style="color:var(--primary)">The cat is...</h3>
-
-        <div class="btn-grid">
-            <button class="menu-card" onclick="moverGato('IN')">IN<br><small>(Dentro)</small></button>
-            <button class="menu-card" onclick="moverGato('ON')">ON<br><small>(Em cima)</small></button>
-            <button class="menu-card" onclick="moverGato('UNDER')">UNDER<br><small>(Embaixo)</small></button>
-            <button class="menu-card" onclick="moverGato('NEXT TO')">NEXT TO<br><small>(Ao lado)</small></button>
+        <h3 id="prepo-text">The cat is...</h3>
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:5px;">
+            <button class="btn-option" onclick="moverGato('IN')">IN</button>
+            <button class="btn-option" onclick="moverGato('ON')">ON</button>
+            <button class="btn-option" onclick="moverGato('UNDER')">UNDER</button>
+            <button class="btn-option" onclick="moverGato('NEXT TO')">NEXT TO</button>
         </div>
     </div>
 
     <div id="game-direcao" class="game-screen">
         <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
-        <h2>Motorista Maluco</h2>
-        
-        <div class="map-grid">
-            <div class="road-line"></div>
-            <div class="car" id="car">🚗</div>
+        <h2>Motorista</h2>
+        <div style="background:#333; height:150px; position:relative; border-radius:10px; margin-bottom:10px;">
+            <div class="car" id="car" style="font-size:40px; position:absolute; bottom:10px; left:45%; transition:0.5s;">🚗</div>
         </div>
-        
-        <h3 id="dir-text">Go Straight!</h3>
-
-        <div style="display: flex; justify-content: center;">
-            <button class="arrow-btn" onclick="moverCarro('left')">⬅ Left</button>
-            <button class="arrow-btn" onclick="moverCarro('straight')">⬆ Straight</button>
-            <button class="arrow-btn" onclick="moverCarro('right')">Right ➡</button>
+        <div style="display:flex; gap:5px;">
+            <button class="btn-option" onclick="moverCarro('left')">⬅ Left</button>
+            <button class="btn-option" onclick="moverCarro('straight')">⬆ Straight</button>
+            <button class="btn-option" onclick="moverCarro('right')">Right ➡</button>
         </div>
     </div>
 
     <div id="game-tobe" class="game-screen">
         <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
-        <h2>O Trio Mágico</h2>
-        <p>Combine a pessoa com o verbo!</p>
-        
-        <div class="tobe-card">
-            <span id="subject-text">SHE</span> 
-            <span style="color:#ccc">___</span> 
-            <span id="complement-text">HAPPY</span>
+        <h2>Ser ou Estar?</h2>
+        <div style="font-size:30px; margin:20px;">
+            <span id="tb-sub">SHE</span> <span style="color:var(--primary)">___</span> <span id="tb-comp">HAPPY</span>
         </div>
-        
-        <div class="tobe-options">
-            <button class="tobe-btn" id="btn-am" onclick="checkToBe('AM')">AM</button>
-            <button class="tobe-btn" id="btn-is" onclick="checkToBe('IS')">IS</button>
-            <button class="tobe-btn" id="btn-are" onclick="checkToBe('ARE')">ARE</button>
+        <div style="display:flex; gap:10px;">
+            <button id="btn-am" class="btn-option" onclick="checkToBe('AM')">AM</button>
+            <button id="btn-is" class="btn-option" onclick="checkToBe('IS')">IS</button>
+            <button id="btn-are" class="btn-option" onclick="checkToBe('ARE')">ARE</button>
         </div>
+        <p id="tb-msg" style="height:20px; color:var(--primary); font-weight:bold;"></p>
+        <button class="back-btn" onclick="nextToBe()" style="background:var(--primary); color:white;">Próxima ➡</button>
+    </div>
+
+    <div id="game-colors" class="game-screen">
+        <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
+        <h2>O Artista</h2>
+        <p>Misture 2 cores para criar uma nova!</p>
         
-        <p id="tobe-feedback" style="height: 30px; font-weight: bold; color: var(--primary);"></p>
+        <div class="color-mixer">
+            <div class="paint-bucket" id="c1" style="background:#ddd;"></div>
+            <span>+</span>
+            <div class="paint-bucket" id="c2" style="background:#ddd;"></div>
+            <span>=</span>
+            <div class="paint-bucket" id="res" style="background:white; border-style:dashed;"></div>
+        </div>
+
+        <div style="display:flex; gap:5px;">
+            <button class="btn-option" style="background:red; border-color:darkred;" onclick="pickColor('red')">RED</button>
+            <button class="btn-option" style="background:blue; border-color:darkblue;" onclick="pickColor('blue')">BLUE</button>
+            <button class="btn-option" style="background:yellow; color:black; border-color:orange;" onclick="pickColor('yellow')">YELLOW</button>
+        </div>
+        <button class="back-btn" onclick="resetColor()">Limpar / Reset</button>
+    </div>
+
+    <div id="game-math" class="game-screen">
+        <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
+        <h2>Math Master</h2>
+        <div style="font-size:26px; margin:20px; font-weight:bold;">
+            <span id="math-q">One + Two = ?</span>
+        </div>
+        <div id="math-options" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+            </div>
+        <p id="math-msg" style="height:20px; color:var(--primary);"></p>
+        <button class="back-btn" onclick="nextMath()" style="background:var(--primary); color:white;">Próxima ➡</button>
+    </div>
+
+    <div id="game-monster" class="game-screen">
+        <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
+        <h2>Monster Maker</h2>
         
-        <button class="back-btn" onclick="nextQuestion()" style="background:var(--primary); color:white; width:100%; margin-top:20px;">Próxima ➡</button>
+        <div class="monster-stage">
+            <div id="mon-head">👽</div>
+            <div id="mon-body" style="font-size:40px;">👕</div>
+            <div id="mon-legs" style="font-size:40px;">👖</div>
+        </div>
+
+        <div class="part-control">
+            <span>HEAD</span>
+            <button onclick="changePart('head')">Mudar ➡</button>
+        </div>
+        <div class="part-control">
+            <span>BODY</span>
+            <button onclick="changePart('body')">Mudar ➡</button>
+        </div>
+        <div class="part-control">
+            <span>LEGS</span>
+            <button onclick="changePart('legs')">Mudar ➡</button>
+        </div>
+    </div>
+
+    <div id="game-detective" class="game-screen">
+        <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
+        <h2>O Detetive</h2>
+        <p>Qual a palavra certa para a pergunta?</p>
+        
+        <div style="background:#eee; padding:15px; border-radius:10px; margin-bottom:15px;">
+            <div style="font-size:22px; font-weight:bold;">"_____ is he?"</div>
+            <div style="color:#666; font-style:italic; margin-top:5px;">Resposta: "My Brother"</div>
+        </div>
+
+        <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+            <button class="btn-option" onclick="alert('WHO (Quem) - Acertou!')">WHO</button>
+            <button class="btn-option" onclick="alert('WHERE (Onde) - Errou!')">WHERE</button>
+            <button class="btn-option" onclick="alert('WHAT (O que) - Errou!')">WHAT</button>
+            <button class="btn-option" onclick="alert('WHEN (Quando) - Errou!')">WHEN</button>
+        </div>
+        <p><small>*Versão simples de treino</small></p>
     </div>
 
     <script>
-        // --- LÓGICA GERAL ---
+        // --- SISTEMA GERAL ---
         function abrirJogo(id) {
+            document.querySelectorAll('.game-screen').forEach(el => el.style.display = 'none');
             document.getElementById('main-menu').style.display = 'none';
             document.getElementById('game-' + id).style.display = 'block';
-            document.getElementById('game-' + id).classList.add('active');
             
-            // Inits especiais
-            if(id === 'demo') setDemo('near');
-            if(id === 'tobe') nextQuestion();
+            // Inits
+            if(id === 'tobe') nextToBe();
+            if(id === 'math') nextMath();
+            if(id === 'colors') resetColor();
         }
 
         function voltarMenu() {
-            var telas = document.getElementsByClassName('game-screen');
-            for(var i=0; i<telas.length; i++) {
-                telas[i].style.display = 'none';
-            }
+            document.querySelectorAll('.game-screen').forEach(el => el.style.display = 'none');
             document.getElementById('main-menu').style.display = 'block';
         }
 
-        // --- JOGO 1 ---
-        function setModal(word, translation, emoji) {
-            document.getElementById('modal-slot').innerText = word;
-            document.getElementById('modal-traducao').innerText = "Eu " + translation + " falar.";
-            document.getElementById('modal-feedback').innerText = emoji;
+        // --- JOGO 1: MODAIS ---
+        function setModal(w, t, e) {
+            document.getElementById('modal-slot').innerText = w;
+            document.getElementById('modal-traducao').innerText = "Eu " + t + " falar.";
+            document.getElementById('modal-feedback').innerText = e;
         }
 
-        // --- JOGO 2 ---
-        let isNear = true;
-        let isSingular = true;
-        function setDemo(type) {
-            if(type === 'near') isNear = true;
-            if(type === 'far') isNear = false;
-            if(type === 'one') isSingular = true;
-            if(type === 'many') isSingular = false;
-
-            document.getElementById('btn-near').className = isNear ? 'toggle-btn selected' : 'toggle-btn';
-            document.getElementById('btn-far').className = !isNear ? 'toggle-btn selected' : 'toggle-btn';
-            document.getElementById('btn-one').className = isSingular ? 'toggle-btn selected' : 'toggle-btn';
-            document.getElementById('btn-many').className = !isSingular ? 'toggle-btn selected' : 'toggle-btn';
-
+        // --- JOGO 2: DEMO ---
+        let dNear = true, dOne = true;
+        function toggleDemo(type) {
+            if(type === 'near') dNear = !dNear;
+            if(type === 'one') dOne = !dOne;
+            
             const apples = document.getElementById('apples');
-            apples.innerText = isSingular ? '🍎' : '🍎🍎🍎';
-            apples.style.left = isNear ? '100px' : '200px'; 
-            apples.style.transform = isNear ? 'scale(1)' : 'scale(0.6)';
-
-            let result = "";
-            let explanation = "";
-            if (isNear && isSingular) { result = "THIS"; explanation = "Perto e Um só"; }
-            else if (!isNear && isSingular) { result = "THAT"; explanation = "Longe e Um só"; }
-            else if (isNear && !isSingular) { result = "THESE"; explanation = "Perto e Vários"; }
-            else if (!isNear && !isSingular) { result = "THOSE"; explanation = "Longe e Vários"; }
-
-            document.getElementById('demo-result').innerText = result;
-            document.getElementById('demo-explanation').innerText = explanation;
+            apples.innerText = dOne ? '🍎' : '🍎🍎🍎';
+            apples.style.left = dNear ? '70px' : '200px';
+            apples.style.transform = dNear ? 'scale(1)' : 'scale(0.6)';
+            
+            let res = "THIS";
+            if(!dNear && dOne) res = "THAT";
+            if(dNear && !dOne) res = "THESE";
+            if(!dNear && !dOne) res = "THOSE";
+            document.getElementById('demo-result').innerText = res;
         }
 
-        // --- JOGO 3 ---
-        function moverGato(pos) {
-            const cat = document.getElementById('cat');
-            const text = document.getElementById('prepo-text');
-            text.innerText = "The cat is " + pos + " the box";
-            cat.style.zIndex = 2; cat.style.opacity = 1;
+        // --- JOGO 3: PREPO ---
+        function moverGato(p) {
+            const c = document.getElementById('cat');
+            document.getElementById('prepo-text').innerText = "The cat is " + p;
+            c.style.opacity = 1; c.style.zIndex = 2;
+            if(p === 'IN') { c.style.top = '50%'; c.style.zIndex = 0; } 
+            else if(p === 'ON') { c.style.top = '10%'; }
+            else if(p === 'UNDER') { c.style.top = '90%'; }
+            else { c.style.left = '80%'; setTimeout(()=>c.style.left='50%',1000); }
+        }
 
-            if(pos === 'IN') { cat.style.top = '15px'; cat.style.zIndex = 0; } 
-            else if (pos === 'ON') { cat.style.top = '-35px'; } 
-            else if (pos === 'UNDER') { cat.style.top = '105px'; } 
-            else if (pos === 'NEXT TO') { 
-                cat.style.top = '40px'; cat.style.left = '160px'; 
-                setTimeout(() => { cat.style.left = ''; }, 1000); 
+        // --- JOGO 4: DIRECAO ---
+        function moverCarro(d) {
+            const c = document.getElementById('car');
+            if(d === 'straight') { c.style.transform = "translateY(-100px)"; setTimeout(()=>c.style.transform="translateY(0)",1000); }
+            if(d === 'left') { c.style.transform = "rotate(-90deg)"; setTimeout(()=>c.style.transform="rotate(0)",1000); }
+            if(d === 'right') { c.style.transform = "rotate(90deg)"; setTimeout(()=>c.style.transform="rotate(0)",1000); }
+        }
+
+        // --- JOGO 5: TO BE ---
+        const tbQ = [{s:"I",a:"AM",c:"HAPPY"}, {s:"SHE",a:"IS",c:"TALL"}, {s:"THEY",a:"ARE",c:"HERE"}];
+        let currTB;
+        function nextToBe() {
+            currTB = tbQ[Math.floor(Math.random()*tbQ.length)];
+            document.getElementById('tb-sub').innerText = currTB.s;
+            document.getElementById('tb-comp').innerText = currTB.c;
+            document.getElementById('tb-msg').innerText = "";
+            ['am','is','are'].forEach(id=>document.getElementById('btn-'+id).className='btn-option');
+        }
+        function checkToBe(ans) {
+            const btn = document.getElementById('btn-'+ans.toLowerCase());
+            if(ans === currTB.a) { btn.classList.add('correct'); document.getElementById('tb-msg').innerText = "Very Good!"; }
+            else { btn.classList.add('wrong'); setTimeout(()=>btn.classList.remove('wrong'),500); }
+        }
+
+        // --- JOGO 6: CORES ---
+        let picked = [];
+        function pickColor(c) {
+            if(picked.length >= 2) return;
+            picked.push(c);
+            document.getElementById(picked.length === 1 ? 'c1' : 'c2').style.backgroundColor = c;
+            
+            if(picked.length === 2) {
+                let res = "gray";
+                if(picked.includes('red') && picked.includes('blue')) res = "purple";
+                if(picked.includes('red') && picked.includes('yellow')) res = "orange";
+                if(picked.includes('blue') && picked.includes('yellow')) res = "green";
+                if(picked[0] === picked[1]) res = picked[0];
+                document.getElementById('res').style.backgroundColor = res;
             }
         }
-
-        // --- JOGO 4 ---
-        function moverCarro(dir) {
-            const car = document.getElementById('car');
-            const text = document.getElementById('dir-text');
-
-            if(dir === 'straight') {
-                text.innerText = "Go Straight!";
-                car.style.transform = "translateY(-100px)";
-                setTimeout(() => { car.style.transform = "translateY(0)"; }, 1000);
-            } else if (dir === 'left') {
-                text.innerText = "Turn Left!";
-                car.style.transform = "rotate(-90deg)";
-                setTimeout(() => { car.style.transform = "rotate(0)"; }, 1000);
-            } else if (dir === 'right') {
-                text.innerText = "Turn Right!";
-                car.style.transform = "rotate(90deg)";
-                setTimeout(() => { car.style.transform = "rotate(0)"; }, 1000);
-            }
+        function resetColor() {
+            picked = [];
+            ['c1','c2','res'].forEach(id => document.getElementById(id).style.backgroundColor = (id==='res'?'white':'#ddd'));
         }
 
-        // --- JOGO 5: TO BE (NOVO) ---
-        // Lista de perguntas (Subject, Correct Answer, Complement)
-        const questions = [
-            { sub: "I", ans: "AM", comp: "HAPPY" },
-            { sub: "YOU", ans: "ARE", comp: "MY FRIEND" },
-            { sub: "SHE", ans: "IS", comp: "A DOCTOR" },
-            { sub: "HE", ans: "IS", comp: "FAST" },
-            { sub: "IT", ans: "IS", comp: "A CAT" },
-            { sub: "WE", ans: "ARE", comp: "FAMILY" },
-            { sub: "THEY", ans: "ARE", comp: "PLAYING" }
-        ];
-        
-        let currentQ = null;
-
-        function nextQuestion() {
-            // Escolhe uma pergunta aleatória
-            currentQ = questions[Math.floor(Math.random() * questions.length)];
+        // --- JOGO 7: MATH ---
+        const nums = {1:"One",2:"Two",3:"Three",4:"Four",5:"Five"};
+        let currMathAns = 0;
+        function nextMath() {
+            let n1 = Math.floor(Math.random()*3)+1;
+            let n2 = Math.floor(Math.random()*2)+1;
+            currMathAns = n1 + n2;
+            document.getElementById('math-q').innerText = nums[n1] + " + " + nums[n2] + " = ?";
             
-            document.getElementById('subject-text').innerText = currentQ.sub;
-            document.getElementById('complement-text').innerText = currentQ.comp;
-            document.getElementById('tobe-feedback').innerText = "";
-            
-            // Resetar cores dos botões
-            document.getElementById('btn-am').className = "tobe-btn";
-            document.getElementById('btn-is').className = "tobe-btn";
-            document.getElementById('btn-are').className = "tobe-btn";
+            let html = "";
+            for(let i=2; i<=5; i++) {
+                html += `<button class="btn-option" onclick="checkMath(${i}, this)">${nums[i]}</button>`;
+            }
+            document.getElementById('math-options').innerHTML = html;
+            document.getElementById('math-msg').innerText = "";
+        }
+        function checkMath(val, btn) {
+            if(val === currMathAns) { btn.classList.add('correct'); document.getElementById('math-msg').innerText = "Correct!"; }
+            else { btn.classList.add('wrong'); }
         }
 
-        function checkToBe(choice) {
-            if(!currentQ) return;
-
-            const btn = document.getElementById('btn-' + choice.toLowerCase());
-            
-            if(choice === currentQ.ans) {
-                // Acertou
-                btn.classList.add('correct');
-                document.getElementById('tobe-feedback').innerText = "Muito bem! " + currentQ.sub + " " + choice + " " + currentQ.comp;
-                // Efeito sonoro fake (Emoji)
-            } else {
-                // Errou
-                btn.classList.add('wrong');
-                document.getElementById('tobe-feedback').innerText = "Ops! Tente de novo.";
-                setTimeout(() => { btn.classList.remove('wrong'); }, 500);
-            }
+        // --- JOGO 8: MONSTER ---
+        const parts = {
+            head: ['👽','🤡','🤖','🎃','🐯'],
+            body: ['👕','🎽','🥋','👔'],
+            legs: ['👖','🩳','🧜‍♀️']
+        };
+        let pIdx = {head:0, body:0, legs:0};
+        function changePart(type) {
+            pIdx[type]++;
+            if(pIdx[type] >= parts[type].length) pIdx[type] = 0;
+            document.getElementById('mon-'+type).innerText = parts[type][pIdx[type]];
         }
 
     </script>
-
 </body>
 </html>
