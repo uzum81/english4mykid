@@ -13,6 +13,7 @@
             --wrong: #ff4444;
             --blue: #2196F3;
             --purple: #9C27B0;
+            --pink: #E91E63;
         }
         body {
             font-family: 'Comic Sans MS', 'Arial', sans-serif;
@@ -24,17 +25,17 @@
         }
         h1 { color: var(--primary); margin: 10px 0; font-size: 24px; }
         
-        /* --- MENU PRINCIPAL (GRID 3 COLUNAS) --- */
+        /* --- MENU PRINCIPAL --- */
         .menu-grid {
             display: grid;
-            grid-template-columns: repeat(3, 1fr); /* 3 por linha no celular */
+            grid-template-columns: repeat(3, 1fr); /* 3 colunas para caber tudo */
             gap: 10px;
             max-width: 600px;
             margin: 0 auto;
         }
         .menu-card {
             background: white;
-            padding: 10px;
+            padding: 5px;
             border-radius: 15px;
             box-shadow: 0 4px 6px rgba(0,0,0,0.1);
             cursor: pointer;
@@ -44,7 +45,7 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            height: 100px;
+            height: 110px;
         }
         .menu-card:active { transform: translateY(4px); border-bottom: 0; }
         .menu-card h3 { margin: 5px 0 0 0; color: #333; font-size: 13px; }
@@ -65,7 +66,7 @@
         .active { display: block; }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        /* --- BOTÕES E COMPONENTES GERAIS --- */
+        /* --- BOTÕES GERAIS --- */
         .back-btn {
             background: #eee; border: none; padding: 8px 15px;
             border-radius: 20px; margin-bottom: 10px; cursor: pointer;
@@ -83,22 +84,27 @@
         @keyframes shake { 0% { transform: translateX(0); } 25% { transform: translateX(-5px); } 75% { transform: translateX(5px); } 100% { transform: translateX(0); } }
 
         /* --- ESTILOS ESPECÍFICOS --- */
-        /* Modais */
+        /* Candy Shop */
+        .candy-shelf {
+            background: #FFEBEE; border: 4px solid var(--pink); border-radius: 10px;
+            padding: 10px; margin: 10px 0; display: inline-block;
+        }
+        .candy-row { display: flex; justify-content: center; gap: 10px; margin: 5px 0; }
+        .candy-item { font-size: 30px; animation: popIn 0.3s; }
+        @keyframes popIn { from { transform: scale(0); } to { transform: scale(1); } }
+        
+        /* Outros jogos (Simplificados para manter o código limpo) */
         .slot { border-bottom: 3px solid #333; color: #007bff; min-width: 50px; display: inline-block; }
-        /* Demo */
         .demo-scene { height: 120px; position: relative; background: #e6f2ff; border-radius: 10px; margin: 10px 0; overflow: hidden; }
         .hand { font-size: 50px; position: absolute; left: 10px; top: 30px; z-index: 2; }
         .apples { font-size: 35px; position: absolute; top: 40px; transition: all 0.5s; }
-        /* Prepo */
         .box-scene { height: 150px; position: relative; background: #fff3e0; border-radius: 10px; margin: 10px 0; }
         .the-box { width: 80px; height: 80px; background: #8B4513; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
         .the-cat { font-size: 40px; position: absolute; transition: all 0.5s; left: 50%; top: 50%; transform: translate(-50%, -50%); z-index: 2; }
-        /* Colors */
         .color-mixer { height: 100px; display: flex; justify-content: center; align-items: center; gap: 10px; font-size: 30px; font-weight: bold; margin: 20px 0; }
-        .paint-bucket { width: 60px; height: 60px; border-radius: 50%; border: 3px solid #333; }
-        /* Monster */
-        .monster-stage { background: #e0f7fa; height: 200px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 10px; font-size: 50px; line-height: 0.8; }
-        .part-control { display: flex; justify-content: space-between; align-items: center; background: #f0f0f0; margin: 5px 0; padding: 5px; border-radius: 10px; }
+        .paint-bucket { width: 50px; height: 50px; border-radius: 50%; border: 3px solid #333; }
+        .monster-stage { background: #e0f7fa; height: 180px; display: flex; flex-direction: column; align-items: center; justify-content: center; border-radius: 10px; font-size: 50px; line-height: 0.8; }
+        .part-control { display: flex; justify-content: space-between; align-items: center; background: #f0f0f0; margin: 5px 0; padding: 5px; border-radius: 10px; font-size: 14px;}
 
     </style>
 </head>
@@ -108,6 +114,10 @@
 
     <div id="main-menu" class="active">
         <div class="menu-grid">
+            <div class="menu-card" onclick="abrirJogo('candy')" style="border-color: var(--pink);">
+                <div class="menu-icon">🍬</div>
+                <h3 style="color:var(--pink)">Candy Shop<br>(Math)</h3>
+            </div>
             <div class="menu-card" onclick="abrirJogo('modais')">
                 <div class="menu-icon">🚀</div>
                 <h3>Poderes<br>(Modals)</h3>
@@ -116,6 +126,7 @@
                 <div class="menu-icon">👉</div>
                 <h3>Apontar<br>(This/That)</h3>
             </div>
+            
             <div class="menu-card" onclick="abrirJogo('prepo')">
                 <div class="menu-icon">📦</div>
                 <h3>Posição<br>(In/On)</h3>
@@ -128,13 +139,10 @@
                 <div class="menu-icon">⭐</div>
                 <h3>Ser/Estar<br>(Am/Is/Are)</h3>
             </div>
+            
             <div class="menu-card" onclick="abrirJogo('colors')">
                 <div class="menu-icon">🎨</div>
                 <h3>Cores<br>(Colors)</h3>
-            </div>
-            <div class="menu-card" onclick="abrirJogo('math')">
-                <div class="menu-icon">➗</div>
-                <h3>Números<br>(Math)</h3>
             </div>
             <div class="menu-card" onclick="abrirJogo('monster')">
                 <div class="menu-icon">👾</div>
@@ -145,6 +153,25 @@
                 <h3>Perguntas<br>(Wh-)</h3>
             </div>
         </div>
+    </div>
+
+    <div id="game-candy" class="game-screen">
+        <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
+        <h2 style="color:var(--pink)">Candy Shop</h2>
+        <p>Quantos doces no total?</p>
+        
+        <div id="candy-container" style="min-height: 150px; display:flex; align-items:center; justify-content:center;">
+            </div>
+
+        <div style="font-size: 20px; margin-bottom: 10px; font-weight: bold; color: #666;">
+            <span id="candy-math-text">2 rows of 3</span>
+        </div>
+
+        <div id="candy-options" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
+            </div>
+        
+        <p id="candy-msg" style="height:20px; color:var(--pink); font-weight:bold;"></p>
+        <button class="back-btn" onclick="nextCandy()" style="background:var(--pink); color:white;">Próximo Pedido ➡</button>
     </div>
 
     <div id="game-modais" class="game-screen">
@@ -222,8 +249,6 @@
     <div id="game-colors" class="game-screen">
         <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
         <h2>O Artista</h2>
-        <p>Misture 2 cores para criar uma nova!</p>
-        
         <div class="color-mixer">
             <div class="paint-bucket" id="c1" style="background:#ddd;"></div>
             <span>+</span>
@@ -231,68 +256,40 @@
             <span>=</span>
             <div class="paint-bucket" id="res" style="background:white; border-style:dashed;"></div>
         </div>
-
         <div style="display:flex; gap:5px;">
             <button class="btn-option" style="background:red; border-color:darkred;" onclick="pickColor('red')">RED</button>
             <button class="btn-option" style="background:blue; border-color:darkblue;" onclick="pickColor('blue')">BLUE</button>
             <button class="btn-option" style="background:yellow; color:black; border-color:orange;" onclick="pickColor('yellow')">YELLOW</button>
         </div>
-        <button class="back-btn" onclick="resetColor()">Limpar / Reset</button>
-    </div>
-
-    <div id="game-math" class="game-screen">
-        <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
-        <h2>Math Master</h2>
-        <div style="font-size:26px; margin:20px; font-weight:bold;">
-            <span id="math-q">One + Two = ?</span>
-        </div>
-        <div id="math-options" style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
-            </div>
-        <p id="math-msg" style="height:20px; color:var(--primary);"></p>
-        <button class="back-btn" onclick="nextMath()" style="background:var(--primary); color:white;">Próxima ➡</button>
+        <button class="back-btn" onclick="resetColor()">Reset</button>
     </div>
 
     <div id="game-monster" class="game-screen">
         <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
         <h2>Monster Maker</h2>
-        
         <div class="monster-stage">
             <div id="mon-head">👽</div>
             <div id="mon-body" style="font-size:40px;">👕</div>
             <div id="mon-legs" style="font-size:40px;">👖</div>
         </div>
-
-        <div class="part-control">
-            <span>HEAD</span>
-            <button onclick="changePart('head')">Mudar ➡</button>
-        </div>
-        <div class="part-control">
-            <span>BODY</span>
-            <button onclick="changePart('body')">Mudar ➡</button>
-        </div>
-        <div class="part-control">
-            <span>LEGS</span>
-            <button onclick="changePart('legs')">Mudar ➡</button>
-        </div>
+        <div class="part-control"><span>HEAD</span><button onclick="changePart('head')">➡</button></div>
+        <div class="part-control"><span>BODY</span><button onclick="changePart('body')">➡</button></div>
+        <div class="part-control"><span>LEGS</span><button onclick="changePart('legs')">➡</button></div>
     </div>
 
     <div id="game-detective" class="game-screen">
         <button class="back-btn" onclick="voltarMenu()">⬅ Menu</button>
         <h2>O Detetive</h2>
-        <p>Qual a palavra certa para a pergunta?</p>
-        
         <div style="background:#eee; padding:15px; border-radius:10px; margin-bottom:15px;">
             <div style="font-size:22px; font-weight:bold;">"_____ is he?"</div>
             <div style="color:#666; font-style:italic; margin-top:5px;">Resposta: "My Brother"</div>
         </div>
-
         <div style="display:grid; grid-template-columns: 1fr 1fr; gap:10px;">
             <button class="btn-option" onclick="alert('WHO (Quem) - Acertou!')">WHO</button>
             <button class="btn-option" onclick="alert('WHERE (Onde) - Errou!')">WHERE</button>
             <button class="btn-option" onclick="alert('WHAT (O que) - Errou!')">WHAT</button>
             <button class="btn-option" onclick="alert('WHEN (Quando) - Errou!')">WHEN</button>
         </div>
-        <p><small>*Versão simples de treino</small></p>
     </div>
 
     <script>
@@ -304,8 +301,8 @@
             
             // Inits
             if(id === 'tobe') nextToBe();
-            if(id === 'math') nextMath();
             if(id === 'colors') resetColor();
+            if(id === 'candy') nextCandy();
         }
 
         function voltarMenu() {
@@ -313,32 +310,76 @@
             document.getElementById('main-menu').style.display = 'block';
         }
 
-        // --- JOGO 1: MODAIS ---
+        // --- JOGO 10: CANDY SHOP (LOGICA) ---
+        let candyTotal = 0;
+        const candyTypes = ['🍬', '🍭', '🍫', '🧁'];
+        
+        function nextCandy() {
+            const rows = Math.floor(Math.random() * 3) + 1; // 1 a 3 linhas
+            const cols = Math.floor(Math.random() * 4) + 1; // 1 a 4 colunas
+            candyTotal = rows * cols;
+            const sweet = candyTypes[Math.floor(Math.random() * candyTypes.length)];
+            
+            // Gerar Visual (Prateleira)
+            let html = '<div class="candy-shelf">';
+            for(let r=0; r<rows; r++) {
+                html += '<div class="candy-row">';
+                for(let c=0; c<cols; c++) {
+                    html += `<div class="candy-item">${sweet}</div>`;
+                }
+                html += '</div>';
+            }
+            html += '</div>';
+            document.getElementById('candy-container').innerHTML = html;
+            
+            // Texto Educativo
+            document.getElementById('candy-math-text').innerText = `${rows} rows of ${cols}`;
+            document.getElementById('candy-msg').innerText = "";
+
+            // Opções de Resposta (1 Certa, 3 Erradas)
+            let opts = [candyTotal];
+            while(opts.length < 4) {
+                let wrong = Math.floor(Math.random() * 12) + 1;
+                if(!opts.includes(wrong)) opts.push(wrong);
+            }
+            opts.sort(() => Math.random() - 0.5); // Embaralhar
+
+            let btnHtml = "";
+            opts.forEach(num => {
+                btnHtml += `<button class="btn-option" onclick="checkCandy(${num}, this)">${num}</button>`;
+            });
+            document.getElementById('candy-options').innerHTML = btnHtml;
+        }
+
+        function checkCandy(ans, btn) {
+            if(ans === candyTotal) {
+                btn.classList.add('correct');
+                document.getElementById('candy-msg').innerText = "Yummy! Correct!";
+            } else {
+                btn.classList.add('wrong');
+            }
+        }
+
+        // --- OUTROS JOGOS (MANTIDOS) ---
         function setModal(w, t, e) {
             document.getElementById('modal-slot').innerText = w;
             document.getElementById('modal-traducao').innerText = "Eu " + t + " falar.";
             document.getElementById('modal-feedback').innerText = e;
         }
-
-        // --- JOGO 2: DEMO ---
         let dNear = true, dOne = true;
         function toggleDemo(type) {
             if(type === 'near') dNear = !dNear;
             if(type === 'one') dOne = !dOne;
-            
             const apples = document.getElementById('apples');
             apples.innerText = dOne ? '🍎' : '🍎🍎🍎';
             apples.style.left = dNear ? '70px' : '200px';
             apples.style.transform = dNear ? 'scale(1)' : 'scale(0.6)';
-            
             let res = "THIS";
             if(!dNear && dOne) res = "THAT";
             if(dNear && !dOne) res = "THESE";
             if(!dNear && !dOne) res = "THOSE";
             document.getElementById('demo-result').innerText = res;
         }
-
-        // --- JOGO 3: PREPO ---
         function moverGato(p) {
             const c = document.getElementById('cat');
             document.getElementById('prepo-text').innerText = "The cat is " + p;
@@ -348,16 +389,12 @@
             else if(p === 'UNDER') { c.style.top = '90%'; }
             else { c.style.left = '80%'; setTimeout(()=>c.style.left='50%',1000); }
         }
-
-        // --- JOGO 4: DIRECAO ---
         function moverCarro(d) {
             const c = document.getElementById('car');
             if(d === 'straight') { c.style.transform = "translateY(-100px)"; setTimeout(()=>c.style.transform="translateY(0)",1000); }
             if(d === 'left') { c.style.transform = "rotate(-90deg)"; setTimeout(()=>c.style.transform="rotate(0)",1000); }
             if(d === 'right') { c.style.transform = "rotate(90deg)"; setTimeout(()=>c.style.transform="rotate(0)",1000); }
         }
-
-        // --- JOGO 5: TO BE ---
         const tbQ = [{s:"I",a:"AM",c:"HAPPY"}, {s:"SHE",a:"IS",c:"TALL"}, {s:"THEY",a:"ARE",c:"HERE"}];
         let currTB;
         function nextToBe() {
@@ -372,14 +409,11 @@
             if(ans === currTB.a) { btn.classList.add('correct'); document.getElementById('tb-msg').innerText = "Very Good!"; }
             else { btn.classList.add('wrong'); setTimeout(()=>btn.classList.remove('wrong'),500); }
         }
-
-        // --- JOGO 6: CORES ---
         let picked = [];
         function pickColor(c) {
             if(picked.length >= 2) return;
             picked.push(c);
             document.getElementById(picked.length === 1 ? 'c1' : 'c2').style.backgroundColor = c;
-            
             if(picked.length === 2) {
                 let res = "gray";
                 if(picked.includes('red') && picked.includes('blue')) res = "purple";
@@ -393,41 +427,13 @@
             picked = [];
             ['c1','c2','res'].forEach(id => document.getElementById(id).style.backgroundColor = (id==='res'?'white':'#ddd'));
         }
-
-        // --- JOGO 7: MATH ---
-        const nums = {1:"One",2:"Two",3:"Three",4:"Four",5:"Five"};
-        let currMathAns = 0;
-        function nextMath() {
-            let n1 = Math.floor(Math.random()*3)+1;
-            let n2 = Math.floor(Math.random()*2)+1;
-            currMathAns = n1 + n2;
-            document.getElementById('math-q').innerText = nums[n1] + " + " + nums[n2] + " = ?";
-            
-            let html = "";
-            for(let i=2; i<=5; i++) {
-                html += `<button class="btn-option" onclick="checkMath(${i}, this)">${nums[i]}</button>`;
-            }
-            document.getElementById('math-options').innerHTML = html;
-            document.getElementById('math-msg').innerText = "";
-        }
-        function checkMath(val, btn) {
-            if(val === currMathAns) { btn.classList.add('correct'); document.getElementById('math-msg').innerText = "Correct!"; }
-            else { btn.classList.add('wrong'); }
-        }
-
-        // --- JOGO 8: MONSTER ---
-        const parts = {
-            head: ['👽','🤡','🤖','🎃','🐯'],
-            body: ['👕','🎽','🥋','👔'],
-            legs: ['👖','🩳','🧜‍♀️']
-        };
+        const parts = {head: ['👽','🤡','🤖','🎃','🐯'], body: ['👕','🎽','🥋','👔'], legs: ['👖','🩳','🧜‍♀️']};
         let pIdx = {head:0, body:0, legs:0};
         function changePart(type) {
             pIdx[type]++;
             if(pIdx[type] >= parts[type].length) pIdx[type] = 0;
             document.getElementById('mon-'+type).innerText = parts[type][pIdx[type]];
         }
-
     </script>
 </body>
 </html>
